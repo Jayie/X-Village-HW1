@@ -18,11 +18,12 @@ X-Village Homework1
     
 # 執行結果
 * 正確結果
-    ![](https://imgur.com/4DFxEJV.png)
+
+![](https://imgur.com/4DFxEJV.png)
  
 * 加分題 
 
-    | <center>輸入不合法</center> | <center>加減法不合法</center> | <center>乘法不合法</center> |
-    | --- | --- | --- |
-    | 使用者輸入不為正整數 | 兩矩陣的大小不相同 | A matrix's col ≠ B matrix's row |
-    | ![](https://imgur.com/0K659v4.png) | ![](https://imgur.com/2n7Cr3U.png) | ![](https://imgur.com/igmcus7.png)|
+| <center>輸入不合法</center> | <center>加減法不合法</center> | <center>乘法不合法</center> |
+| --- | --- | --- |
+| 使用者輸入不為正整數 | 兩矩陣的大小不相同 | A matrix's col ≠ B matrix's row |
+| ![](https://imgur.com/0K659v4.png) | ![](https://imgur.com/2n7Cr3U.png) | ![](https://imgur.com/igmcus7.png)|
