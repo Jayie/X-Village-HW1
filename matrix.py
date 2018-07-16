@@ -114,10 +114,10 @@ def input_num(question):
     while True:
         try:
             a = input(question)
+            if int(a) <= 0: raise Exception
             return int(a)
         except:
-            pass
-        print("invalid input")
+            print("invalid input")
 
 def main():
     #input A
