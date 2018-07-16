@@ -2,6 +2,17 @@ import random
 
 from copy import deepcopy
 
+class AddException(Exception):
+    def __str__(self):
+        return "Matrixs' size should be in the same size"
+
+class MultiException(Exception):
+    def __str__(self):
+        return "A.col and B.row should be the same"
+
+class TransposeException(Exception):
+    def __str__(self):
+        return "Can't do Transpose"
 
 class Matrix:
     matrix = [[]]
@@ -17,47 +28,77 @@ class Matrix:
                 self.matrix[i][j] = random.randrange(0,10)
 
     def add(self, m):
-        """return a new Matrix object after summation"""
-        a = Matrix(self.row, self.col)
-        for i in range(self.row):
-            for j in range(self.col):
-                a.matrix[i][j] = self.matrix[i][j] + m.matrix[i][j]
-        return a
+        try:
+            """return a new Matrix object after summation"""
+            #check if the two matrices have the same size
+            if (self.row != m.row) or (self.col != m.col):
+                raise AddException()
+            
+            #do addition
+            a = Matrix(self.row, self.col)
+            for i in range(self.row):
+                for j in range(self.col):
+                    a.matrix[i][j] = self.matrix[i][j] + m.matrix[i][j]
+            return a
+        except AddException as e:
+            print(e)
+            return Matrix(0,0)
         
     def __add__(self, m): return self.add(m)
 
     def sub(self, m):
-        """return a new Matrix object after substraction"""
-        a = Matrix(self.row, self.col)
-        for i in range(self.row):
-            for j in range(self.col):
-                a.matrix[i][j] = self.matrix[i][j] - m.matrix[i][j]
-        
-        return a
-        
+        try:
+            """return a new Matrix object after substraction"""
+            #check if the two matrices have the same size
+            if (self.row != m.row) or (self.col != m.col):
+                raise AddException()
+
+            #do substraction
+            a = Matrix(self.row, self.col)
+            for i in range(self.row):
+                for j in range(self.col):
+                    a.matrix[i][j] = self.matrix[i][j] - m.matrix[i][j]
+            
+            return a
+        except AddException as e:
+            print(e)
+            return Matrix(0,0)
 
     def __sub__(self, m): return self.sub(m)
 
     def mul(self, m):
-        """return a new Matrix object after multiplication"""
-        a=[[0]* self.col for i in range(m.col)]
-        a = Matrix(self.row, m.col)
-        for i in range(self.row):
-            for j in range(self.col):
-                a.matrix[i][j] = 0
-                for k in range(m.col):
-                    a.matrix[i][j] += self.matrix[i][k] * m.matrix[k][j]
-        return a
+        try:
+            """return a new Matrix object after multiplication"""
+            #check if a.col = b.row
+            if self.col != m.row:
+                raise MultiException()
+
+            #do multiplication
+            a = Matrix(self.row, m.col)
+            for i in range(self.row):
+                for j in range(m.col):
+                    a.matrix[i][j] = 0
+                    for k in range(self.col):
+                        a.matrix[i][j] += self.matrix[i][k] * m.matrix[k][j]
+            return a
+        except MultiException as e:
+            print(e)
+            return Matrix(0,0)
 
     def __mul__(self, m): return self.mul(m)
 
     def transpose(self):
-        """return a new Matrix object after transpose"""
-        a = Matrix(self.row, self.col)
-        for i in range(self.row):
-            for j in range(self.col):
-                a.matrix[i][j] = self.matrix[j][i]
-        return a
+        try:
+            """return a new Matrix object after transpose"""
+            a = Matrix(self.col, self.row)
+            if a.col == 0: raise TransposeException()
+            for i in range(self.col):
+                for j in range(self.row):
+                    a.matrix[i][j] = self.matrix[j][i]
+            return a
+        except TransposeException as e:
+            print(e)
+            return Matrix(0,0)
     
     def display(self):
         """Display the content in the matrix"""
@@ -69,14 +110,11 @@ class Matrix:
         self.display()
         return ""
 
-def input_num(question, b = 0):
+def input_num(question):
     while True:
         try:
             a = input(question)
-            a = int(a)
-            if a > 0:
-                if b == 0: return a
-                if a == b: return a
+            return int(a)
         except:
             pass
         print("invalid input")
@@ -90,27 +128,31 @@ def main():
     a.display()
 
     #input B
-    brow = input_num("Enter B matrix's rows: ", arow)
-    bcol = input_num("Enter B matrix's cols: ", acol)
-    print("Matrix B(%d, %d):" % (arow, acol))
+    brow = input_num("Enter B matrix's rows: ")
+    bcol = input_num("Enter B matrix's cols: ")
+    print("Matrix B(%d, %d):" % (brow, bcol))
     b = Matrix(brow, bcol)
     b.display()
 
     #A + B
     print("========= A + B =========")
-    print(a+b)
+    c = a + b
+    print(c)
 
     #A - B
     print("========= A - B =========")
-    print(a-b)
+    c = a - b
+    print(c)
 
     #A * B
     print("========= A * B =========")
-    print(a*b)
+    c = a * b
+    print(c)
 
     #trans(A*B)
     print("========= the transpose of A*B =========")
-    print((a*b).transpose())
+    c = c.transpose()
+    print(c)
 
 if __name__ == '__main__':
     main()
