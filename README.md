@@ -18,7 +18,7 @@ X-Village Homework1
     
 # 執行結果
 * 正確結果
- ![](https://imgur.com/4DFxEJV.png)
+    ![](https://imgur.com/4DFxEJV.png)
  
 * 加分題 
 
